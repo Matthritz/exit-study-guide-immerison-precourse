@@ -14,7 +14,8 @@
 
 
 const pureShuffle = array => {
-   let result = [];
+   
+    let result = [];
    let newArr = array.slice();
     for (let i = 0; i < newArr.length; i++){
         if (i % 2 === 0){
@@ -112,8 +113,9 @@ var comediansFilteredAndMapped = (comedians) => {
 
 
 var comedianNamesFilteredAndMapped = (comedians) => {
-    // Your code here
-
+    return comedians.filter(comedian => {
+        return comedian.begin >= 2005 && comedian.actor.length > 10})
+    .map(comedian =>  comedian.actor)
 };
 
 
@@ -122,12 +124,27 @@ var comedianNamesFilteredAndMapped = (comedians) => {
 /* Solve by using native method of reduce only */
 var comediansReduced1 = (comedians) => {
     // Your code here
-
+    return comedians.reduce((seed, comedian) => {
+if (comedian.actor.length >= 10 && comedian.begin >= 2005){
+    let newActor = {
+        appearanceNumber: '#' + comedian.number,
+        name: comedian.actor,
+        seasonsActive: comedian.end - (comedian.begin - 1)
+    };
+    seed.push(newActor)
+} 
+    console.log(seed);
+    return seed;
+}, [])
 };
 
 var comediansReduced2 = (comedians) => {
     // Your code here
-
+    return comedians.reduce((acc, comedian)=> {
+        if (comedian.begin >= 2005 && comedian.actor.length >= 10){
+            acc.push(comedian.actor)
+        } return acc;
+    }, [])
 };
 
 
