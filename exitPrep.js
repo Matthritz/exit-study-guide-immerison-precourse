@@ -14,15 +14,29 @@
 
 
 const pureShuffle = array => {
-    // your code here
+   let result = [];
+   let newArr = array.slice();
+    for (let i = 0; i < newArr.length; i++){
+        if (i % 2 === 0){
+            result.push(newArr[i])
+        } else {
+            result.unshift(newArr[i]);
+        }
+    } return result;
 };
 
 var isPalindrome = (string) => {
-    // your code here
+   if (!string){
+       return undefined;
+   } else if (string.split('').reverse().join('').toLowerCase() === string.toLowerCase()){
+        return true;
+    } else {
+        return false;
+    }
 }
 
-const mergeObjects = obj => {
-    // your code here
+const mergeObjects = (...obj) => {
+    return Object.assign(...obj, {});
 };
 
 
@@ -32,16 +46,36 @@ const mergeObjects = obj => {
 //////////////////////////////////////////////////////
 
 var replaceValuesInObj = (obj, value, newValue) => {
-    // your code here
+    for (var key in  obj){
+        if (obj[key] === value){
+            obj[key] = newValue;
+        } if (typeof obj[key] === 'object') {
+            obj[key] = replaceValuesInObj(obj[key], value, newValue);
+        }
+        // console.log(obj)
+    } return obj;
 };
 
 var addKeysToExistingObj = (obj, newKey, newValue) => {
-    // your code here
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+            addKeysToExistingObj(obj[key], newKey, newValue)
+        }
+    }    obj[newKey] = newValue
+    return obj
 };
 
 var map = (arr, func) => {
-    // your code here
-}
+//    let result = []
+    if (arr.length === 0) {
+        return [];
+    } else {
+        return [func(arr[0])].concat(map(arr.slice(1), func))
+    }
+};
+    // result.push([func(arr[0])].concat(map(arr.slice(1), func)));
+    // } return result;
+
 
 
 /////////////////////////////////////////////////////////////////
@@ -63,9 +97,19 @@ var comedians = [
 
 /* Solve by chaining native methods of map and filter only */
 var comediansFilteredAndMapped = (comedians) => {
-    // Your code here
-
+    return comedians.filter(comedian => comedian.begin >= 2005)
+        .map(comedian => {
+            if (comedian.actor.length >= 10) {
+                comedian = {
+                    appearanceNumber: '#' + comedian.number,
+                    name: comedian.actor,
+                    seasonsActive: comedian.end - (comedian.begin - 1)
+                }
+            }
+            return comedian;
+        })
 };
+
 
 var comedianNamesFilteredAndMapped = (comedians) => {
     // Your code here
